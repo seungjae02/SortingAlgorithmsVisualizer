@@ -1,5 +1,6 @@
 import java.awt.event.*;
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class App extends JFrame implements ActionListener {
@@ -9,10 +10,13 @@ public class App extends JFrame implements ActionListener {
      JButton start;
      JLabel lblTtl;
      String selectedAlgo = "";
-     BubbleSort bubble;
      JPanel panelUpper = new JPanel();
-     ArrayOps arrayVis = new ArrayOps();
+     Draw draw = new Draw();
+    CreateArray newArray = new CreateArray();
+    ArrayList<Integer> array = newArray.createArray();
 
+    // Instantiate Algorithms
+    BubbleSort bubble = new BubbleSort();
      // [Insert more sorting algorithms here]
 
     public App(){
@@ -20,6 +24,13 @@ public class App extends JFrame implements ActionListener {
         this.setTitle("Sorting Algorithms Visualizer");
         this.setSize(new Dimension(870, 582));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Title
+        lblTtl = new JLabel("Sorting Algorithms Visualizer");
+        lblTtl.setHorizontalAlignment(JLabel.CENTER);
+        lblTtl.setVerticalAlignment(JLabel.NORTH);
+        lblTtl.setFont(new Font("Niagara Solid", Font.BOLD, 30));
+        panelUpper.add(lblTtl);
 
         // Combo Box
         String[] algorithms = {"Select Algorithm", "Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort"};
@@ -34,22 +45,17 @@ public class App extends JFrame implements ActionListener {
         start.addActionListener(this);
         panelUpper.add(start);
 
-        // Title
-        lblTtl = new JLabel("Sorting Algorithms Visualizer");
-        lblTtl.setHorizontalAlignment(JLabel.CENTER);
-        lblTtl.setVerticalAlignment(JLabel.NORTH);
-        lblTtl.setFont(new Font("Niagara Solid", Font.BOLD, 30));
-        panelUpper.add(lblTtl);
-
+        // Align two panels
         panelUpper.setBounds(0,0,870,80);
-        arrayVis.setBounds(0,50,870,532);
+        draw.setBounds(0,80,870,502);
 
-        //this.add(arrayVis);
+        // Create Random Array
+        draw.initiateBars(array);
+
+        // Add panels
+        this.add(draw);
         this.add(panelUpper);
         this.setVisible(true);
-
-        // Instantiate Array to Sort
-        bubble = new BubbleSort();
 
         // NOTE FOR FUTURE: Instantiate array in a different class maybe
     }
@@ -59,7 +65,7 @@ public class App extends JFrame implements ActionListener {
         if (e.getSource()==start & algosDropdown.getSelectedItem() != "Select Algorithm") {
             //System.out.println(selectedAlgo);
             if (selectedAlgo == "Bubble") {
-                bubble.executeBubbleSort();
+                bubble.executeBubbleSort(array);
             } else if (selectedAlgo == "Selection") {
 
             } else if (selectedAlgo == "Insertion") {
