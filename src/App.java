@@ -11,12 +11,12 @@ public class App extends JFrame implements ActionListener {
      JLabel lblTtl;
      String selectedAlgo = "";
      JPanel panelUpper = new JPanel();
-     Draw draw = new Draw();
     CreateArray newArray = new CreateArray();
     ArrayList<Integer> array = newArray.createArray();
+    Draw draw = new Draw(array);
 
     // Instantiate Algorithms
-    BubbleSort bubble = new BubbleSort();
+    BubbleSort bubble = new BubbleSort(this);
      // [Insert more sorting algorithms here]
 
     public App(){
@@ -46,11 +46,10 @@ public class App extends JFrame implements ActionListener {
         panelUpper.add(start);
 
         // Align two panels
-        panelUpper.setBounds(0,0,870,80);
-        draw.setBounds(0,80,870,502);
+        panelUpper.setBounds(0,0,870,30);
+        draw.setBounds(0,30,870,532);
 
-        // Create Random Array
-        draw.initiateBars(array);
+        // Draw Array Bars on Panel
 
         // Add panels
         this.add(draw);
@@ -64,8 +63,12 @@ public class App extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==start & algosDropdown.getSelectedItem() != "Select Algorithm") {
             //System.out.println(selectedAlgo);
-            if (selectedAlgo == "Bubble") {
-                bubble.executeBubbleSort(array);
+            if (selectedAlgo.equals("Bubble")) {
+                try {
+                    bubble.executeBubbleSort(array, draw);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             } else if (selectedAlgo == "Selection") {
 
             } else if (selectedAlgo == "Insertion") {

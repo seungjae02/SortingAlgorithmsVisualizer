@@ -1,10 +1,20 @@
+import javax.swing.*;
+import javax.swing.Timer;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.awt.*;
+import java.awt.event.*;
 
-public class BubbleSort {
+public class BubbleSort extends JPanel {
     boolean swapped = true;
+    Object screen;
 
-    public void executeBubbleSort(ArrayList<Integer> nums) {
+    public BubbleSort(Object thing) {
+        screen = thing;
+    }
+    
+    public void executeBubbleSort(ArrayList<Integer> nums, Draw draw) throws InterruptedException {
         // Initiate New Array
 
         // Start bubble sorting
@@ -15,13 +25,17 @@ public class BubbleSort {
                     Collections.swap(nums, i, i+1);
                     swapped = true;
 
+
+                    Thread.sleep(10);
+                    draw.removeAll();
+                    draw.updateArray(nums);
+                    draw.revalidate();
+                    draw.paintImmediately(0,30,870,532);;
+                    System.out.println(nums);
                 }
             }
 
         }
         System.out.println(nums);
-
-
     }
-
 }
