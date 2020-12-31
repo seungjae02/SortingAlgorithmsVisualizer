@@ -20,7 +20,7 @@ public class Draw extends JPanel {
 
     }
 
-    public void updateArray(ArrayList<Integer> array) throws InterruptedException {
+    public void updateArray(ArrayList<Integer> array) {
         nums = array;
     }
 }

@@ -6,8 +6,9 @@ import javax.swing.*;
 public class App extends JFrame implements ActionListener {
 
     // Instantiate Objects
+
+    // Random stuff
      JComboBox algosDropdown;
-     JButton start;
      JLabel lblTtl;
      String selectedAlgo = "";
      JPanel panelUpper = new JPanel();
@@ -15,12 +16,19 @@ public class App extends JFrame implements ActionListener {
     ArrayList<Integer> array = newArray.createArray();
     Draw draw = new Draw(array);
 
+    // Buttons
+    JButton start;
+    JButton reset;
+
     // Instantiate Algorithms
-    BubbleSort bubble = new BubbleSort(this);
+    BubbleSort bubble = new BubbleSort();
+    SelectionSort selection = new SelectionSort();
      // [Insert more sorting algorithms here]
 
+    boolean needReset = false;
+
     public App(){
-        // Instantiate Shit
+        // Instantiate stuff
         this.setTitle("Sorting Algorithms Visualizer");
         this.setSize(new Dimension(870, 582));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,15 +47,22 @@ public class App extends JFrame implements ActionListener {
         algosDropdown.addActionListener(this);
         panelUpper.add(algosDropdown);
 
-        // Button
+        // Buttons
+        // Start Button
         start = new JButton("Start Visualization");
         start.setBounds(695, 30, 140,30);
         start.addActionListener(this);
         panelUpper.add(start);
 
+        // Reset Button
+        reset = new JButton("Reset");
+        reset.setBounds(695, 60, 140, 30);
+        reset.addActionListener(this);
+        panelUpper.add(reset);
+
         // Align two panels
-        panelUpper.setBounds(0,0,870,30);
-        draw.setBounds(0,30,870,532);
+        panelUpper.setBounds(0,0,870,60);
+        draw.setBounds(0,60,870,502);
 
         // Draw Array Bars on Panel
 
@@ -59,17 +74,24 @@ public class App extends JFrame implements ActionListener {
         // NOTE FOR FUTURE: Instantiate array in a different class maybe
     }
     @Override
-
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==start & algosDropdown.getSelectedItem() != "Select Algorithm") {
-            //System.out.println(selectedAlgo);
+        if (e.getSource()==start & algosDropdown.getSelectedItem() != "Select Algorithm" & !needReset) {
             if (selectedAlgo.equals("Bubble")) {
+                System.out.println("A");
                 try {
-                    bubble.executeBubbleSort(array, draw);
+                    bubble.executeBubbleSort(array, draw, this);
+                    System.out.println("B");
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                    System.out.println("C");
+                }
+
+            } else if (selectedAlgo == "Selection") {
+                try {
+                    selection.executeSelectionSort(array, draw, this);
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
                 }
-            } else if (selectedAlgo == "Selection") {
 
             } else if (selectedAlgo == "Insertion") {
 
@@ -77,16 +99,29 @@ public class App extends JFrame implements ActionListener {
 
             }
         }
+
+            if (e.getSource()==reset) {
+                array = newArray.createArray();
+                draw.updateArray(array);
+                draw.repaint();
+                needReset = false;
+
+            }
         if (e.getSource()==algosDropdown) {
             System.out.println(algosDropdown.getSelectedItem());
             if (algosDropdown.getSelectedItem() == "Bubble Sort") {
                 selectedAlgo = "Bubble";
                 lblTtl.setText("Bubble Sort");
                 lblTtl.setFont(new Font("Niagra Solid", Font.BOLD, 40));
+
             } else if (algosDropdown.getSelectedItem() == "Selection Sort") {
                 selectedAlgo = "Selection";
+                lblTtl.setText("Selection Sort");
+                lblTtl.setFont(new Font("Niagra Solid", Font.BOLD, 40));
+
             } else if (algosDropdown.getSelectedItem() == "Insertion Sort") {
                 selectedAlgo = "Insertion";
+
             } else if (algosDropdown.getSelectedItem() == "Quick Sort") {
                 selectedAlgo = "Quick";
             }
