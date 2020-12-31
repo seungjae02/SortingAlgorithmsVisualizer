@@ -13,8 +13,7 @@ public class BubbleSort extends JPanel {
                     Collections.swap(nums, i, i+1);
                     swapped = true;
 
-
-                    Thread.sleep(20);
+                    Thread.sleep(10);
                     draw.removeAll();
                     draw.updateArray(nums);
                     draw.revalidate();

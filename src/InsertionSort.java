@@ -4,6 +4,7 @@ import java.util.*;
 public class InsertionSort extends JPanel {
 
     public void executeInsertionSort(ArrayList<Integer> nums, Draw draw, App app) throws InterruptedException {
+
         System.out.println(nums);
 
         for (int static_idx = 1; static_idx < nums.size(); static_idx++) {

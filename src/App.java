@@ -10,6 +10,7 @@ public class App extends JFrame implements ActionListener {
     // Random stuff
      JComboBox algosDropdown;
      JLabel lblTtl;
+     JLabel name;
      String selectedAlgo = "";
      JPanel panelUpper = new JPanel();
     CreateArray newArray = new CreateArray();
@@ -24,22 +25,62 @@ public class App extends JFrame implements ActionListener {
     BubbleSort bubble = new BubbleSort();
     SelectionSort selection = new SelectionSort();
     InsertionSort insertion = new InsertionSort();
-     // [Insert more sorting algorithms here]
+    // Quick Sort Here
 
+    // Runtime, No. Comparisons, Array Accesses
+    // Objects
+    JLabel runtimeLabel;
+    JLabel comparisonsLabel;
+    JLabel arrayAccessesLabel;
+
+    // Global variables
+    int noComparisons = 0;
+    int noArrAccess = 0;
+
+    // Bool value for reset check
     boolean needReset = false;
 
     public App(){
         // Instantiate stuff
         this.setTitle("Sorting Algorithms Visualizer");
-        this.setSize(new Dimension(870, 582));
+        this.setSize(new Dimension(870, 622));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Title
         lblTtl = new JLabel("Sorting Algorithms Visualizer");
-        lblTtl.setHorizontalAlignment(JLabel.CENTER);
-        lblTtl.setVerticalAlignment(JLabel.NORTH);
-        lblTtl.setFont(new Font("Niagara Solid", Font.BOLD, 30));
+        lblTtl.setBounds(235,0,400,60);
+        lblTtl.setFont(new Font("Niagara Solid", Font.BOLD, 25));
+        lblTtl.setForeground(Color.white);
         panelUpper.add(lblTtl);
+
+        // Add Name
+        name = new JLabel("Dev. by: Seung Jae Yang");
+        name.setBounds(327,50,206,40);
+        name.setFont(new Font("Niagara Solid", Font.BOLD, 16));
+        name.setForeground(Color.white);
+        panelUpper.add(name);
+
+        // Runtime, Number Comparisons, Number Array Accesses
+        // Runtime label
+        runtimeLabel = new JLabel("Runtime: null");
+        runtimeLabel.setBounds(10,10,200,30);
+        runtimeLabel.setFont(new Font("Niagara Solid", Font.BOLD, 14));
+        runtimeLabel.setForeground(Color.white);
+        panelUpper.add(runtimeLabel);
+
+        // No. Comparisons Label
+        comparisonsLabel = new JLabel("No. Comparisons: " + noComparisons);
+        comparisonsLabel.setBounds(10,40, 200,30);
+        comparisonsLabel.setFont(new Font("Niagara Solid", Font.BOLD, 14));
+        comparisonsLabel.setForeground(Color.white);
+        panelUpper.add(comparisonsLabel);
+
+        // No. Array Access Label
+        arrayAccessesLabel = new JLabel("No. Array Access: " + noArrAccess);
+        arrayAccessesLabel.setBounds(10,70,200,30);
+        arrayAccessesLabel.setFont(new Font("Niagara Solid", Font.BOLD, 14));
+        arrayAccessesLabel.setForeground(Color.white);
+        panelUpper.add(arrayAccessesLabel);
 
         // Combo Box
         String[] algorithms = {"Select Algorithm", "Bubble Sort", "Selection Sort", "Insertion Sort", "Quick Sort"};
@@ -51,25 +92,29 @@ public class App extends JFrame implements ActionListener {
         // Buttons
         // Start Button
         start = new JButton("Start Visualization");
-        start.setBounds(695, 30, 140,30);
+        start.setBounds(700, 30, 140,30);
         start.addActionListener(this);
         panelUpper.add(start);
 
         // Reset Button
         reset = new JButton("Reset");
-        reset.setBounds(695, 60, 140, 30);
+        reset.setBounds(700, 60, 140, 30);
         reset.addActionListener(this);
         panelUpper.add(reset);
 
         // Align two panels
-        panelUpper.setBounds(0,0,870,60);
-        draw.setBounds(0,60,870,502);
+        panelUpper.setBounds(0,0,870,100);
+        draw.setBounds(0,100,870,522);
 
-        // Draw Array Bars on Panel
+        // Set background colours
+        panelUpper.setBackground(Color.black);
+        draw.setBackground(Color.black);
 
         // Add panels
+        panelUpper.setLayout(new BorderLayout());
         this.add(draw);
         this.add(panelUpper);
+        this.validate();
         this.setVisible(true);
 
     }
@@ -118,18 +163,15 @@ public class App extends JFrame implements ActionListener {
             System.out.println(algosDropdown.getSelectedItem());
             if (algosDropdown.getSelectedItem() == "Bubble Sort") {
                 selectedAlgo = "Bubble";
-                lblTtl.setText("Bubble Sort");
-                lblTtl.setFont(new Font("Niagra Solid", Font.BOLD, 40));
+                runtimeLabel.setText("Runtime: O(N^2)");
 
             } else if (algosDropdown.getSelectedItem() == "Selection Sort") {
                 selectedAlgo = "Selection";
-                lblTtl.setText("Selection Sort");
-                lblTtl.setFont(new Font("Niagra Solid", Font.BOLD, 40));
+                runtimeLabel.setText("Runtime: O(N^2)");
 
             } else if (algosDropdown.getSelectedItem() == "Insertion Sort") {
                 selectedAlgo = "Insertion";
-                lblTtl.setText("Insertion Sort");
-                lblTtl.setFont(new Font("Niagra Solid", Font.BOLD, 40));
+                runtimeLabel.setText("Runtime: O(N^2)");
 
             } else if (algosDropdown.getSelectedItem() == "Quick Sort") {
                 selectedAlgo = "Quick";
