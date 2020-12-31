@@ -23,6 +23,7 @@ public class App extends JFrame implements ActionListener {
     // Instantiate Algorithms
     BubbleSort bubble = new BubbleSort();
     SelectionSort selection = new SelectionSort();
+    InsertionSort insertion = new InsertionSort();
      // [Insert more sorting algorithms here]
 
     boolean needReset = false;
@@ -71,10 +72,10 @@ public class App extends JFrame implements ActionListener {
         this.add(panelUpper);
         this.setVisible(true);
 
-        // NOTE FOR FUTURE: Instantiate array in a different class maybe
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Check status before pressing start button
         if (e.getSource()==start & algosDropdown.getSelectedItem() != "Select Algorithm" & !needReset) {
             if (selectedAlgo.equals("Bubble")) {
                 System.out.println("A");
@@ -94,12 +95,17 @@ public class App extends JFrame implements ActionListener {
                 }
 
             } else if (selectedAlgo == "Insertion") {
+                try {
+                    insertion.executeInsertionSort(array, draw, this);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
 
             } else if (selectedAlgo == "Quick") {
 
             }
         }
-
+            // Reset button status
             if (e.getSource()==reset) {
                 array = newArray.createArray();
                 draw.updateArray(array);
@@ -107,6 +113,7 @@ public class App extends JFrame implements ActionListener {
                 needReset = false;
 
             }
+            // Combo box status
         if (e.getSource()==algosDropdown) {
             System.out.println(algosDropdown.getSelectedItem());
             if (algosDropdown.getSelectedItem() == "Bubble Sort") {
@@ -121,6 +128,8 @@ public class App extends JFrame implements ActionListener {
 
             } else if (algosDropdown.getSelectedItem() == "Insertion Sort") {
                 selectedAlgo = "Insertion";
+                lblTtl.setText("Insertion Sort");
+                lblTtl.setFont(new Font("Niagra Solid", Font.BOLD, 40));
 
             } else if (algosDropdown.getSelectedItem() == "Quick Sort") {
                 selectedAlgo = "Quick";
