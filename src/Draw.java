@@ -15,7 +15,7 @@ public class Draw extends JPanel {
         for (int idx = 0; idx < nums.size(); idx++) {
             //super.paintComponent(g);
             g.setColor(Color.pink);
-            g.fillRect(10 + 17 * (idx), 502 - nums.get(idx), 17, nums.get(idx));
+            g.fillRect(10 + 15 * (idx) + 2 * (idx), 502 - nums.get(idx), 15, nums.get(idx));
         }
 
     }

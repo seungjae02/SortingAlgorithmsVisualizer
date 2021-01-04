@@ -25,7 +25,7 @@ public class App extends JFrame implements ActionListener {
     BubbleSort bubble = new BubbleSort();
     SelectionSort selection = new SelectionSort();
     InsertionSort insertion = new InsertionSort();
-    // Quick Sort Here
+    QuickSort quick = new QuickSort();
 
     // Runtime, No. Comparisons, Array Accesses
     // Objects
@@ -147,7 +147,11 @@ public class App extends JFrame implements ActionListener {
                 }
 
             } else if (selectedAlgo == "Quick") {
-
+                try {
+                    quick.executeQuickSort(array, draw, this);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             }
         }
             // Reset button status
@@ -175,6 +179,7 @@ public class App extends JFrame implements ActionListener {
 
             } else if (algosDropdown.getSelectedItem() == "Quick Sort") {
                 selectedAlgo = "Quick";
+                runtimeLabel.setText("Runtime: Nlog(N)");
             }
         }
 
